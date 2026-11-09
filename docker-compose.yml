@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: agroconnect
+      POSTGRES_USER: agroconnect
+      POSTGRES_PASSWORD: agroconnect
+    ports:
+      - "5432:5432"
+    volumes:
+      - agroconnect-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agroconnect -d agroconnect"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  agroconnect-postgres:

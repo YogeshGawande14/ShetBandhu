@@ -1,0 +1,3 @@
+package com.agroconnect.repository;
+import com.agroconnect.domain.LocalServiceContactThread;import org.springframework.data.jpa.repository.JpaRepository;import java.util.List;import java.util.Optional;import java.util.UUID;
+public interface LocalServiceContactThreadRepository extends JpaRepository<LocalServiceContactThread,UUID>{List<LocalServiceContactThread> findByRequester_IdOrProvider_IdOrderByUpdatedAtDesc(UUID requesterId,UUID providerId);Optional<LocalServiceContactThread> findByListing_IdAndRequester_Id(UUID listingId,UUID requesterId);}

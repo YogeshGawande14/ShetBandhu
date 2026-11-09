@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AgroConnect API - MySQL" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="agroconnect" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.agroconnect.AgroConnectApplication" />
+    <option name="SPRING_BOOT_ACTIVE_PROFILES" value="mysql" />
+    <envs>
+      <env name="SPRING_PROFILES_ACTIVE" value="mysql" />
+      <env name="DATABASE_URL" value="jdbc:mysql://localhost:3306/agroconnect_db?serverTimezone=UTC&amp;createDatabaseIfNotExist=true" />
+      <env name="DATABASE_USERNAME" value="root" />
+      <env name="ADMIN_EMAIL" value="" />
+      <env name="MAIL_HOST" value="" />
+      <env name="MAIL_PORT" value="587" />
+      <env name="MAIL_USERNAME" value="" />
+      <env name="MAIL_PASSWORD" value="" />
+      <env name="MAIL_FROM" value="" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

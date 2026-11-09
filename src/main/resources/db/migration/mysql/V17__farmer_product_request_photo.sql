@@ -1,0 +1,1 @@
+ALTER TABLE farmer_product_requests ADD COLUMN image_url VARCHAR(1000) NULL;

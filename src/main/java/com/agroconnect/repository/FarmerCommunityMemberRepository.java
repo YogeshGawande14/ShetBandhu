@@ -1,0 +1,3 @@
+package com.agroconnect.repository;
+import com.agroconnect.domain.FarmerCommunityMember;import org.springframework.data.jpa.repository.JpaRepository;import java.util.List;import java.util.Optional;import java.util.UUID;
+public interface FarmerCommunityMemberRepository extends JpaRepository<FarmerCommunityMember,UUID>{boolean existsByGroup_IdAndUser_Id(UUID groupId,UUID userId);Optional<FarmerCommunityMember> findByGroup_IdAndUser_Id(UUID groupId,UUID userId);List<FarmerCommunityMember> findByGroup_IdOrderByJoinedAtAsc(UUID groupId);long countByGroup_Id(UUID groupId);}

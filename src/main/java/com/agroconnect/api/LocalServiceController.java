@@ -1,0 +1,16 @@
+package com.agroconnect.api;
+import com.agroconnect.api.dto.ApiDtos.*;import com.agroconnect.service.LocalServiceMarketplaceService;import jakarta.validation.Valid;import lombok.RequiredArgsConstructor;import org.springframework.security.core.Authentication;import org.springframework.security.access.prepost.PreAuthorize;import org.springframework.web.bind.annotation.*;import java.util.List;import java.util.UUID;
+@RestController @RequestMapping("/api/local-services") @RequiredArgsConstructor
+public class LocalServiceController {
+ private final LocalServiceMarketplaceService service;private final CurrentUser currentUser;
+ @GetMapping @PreAuthorize("permitAll()") public List<LocalServiceListingResponse> search(@RequestParam(required=false) java.math.BigDecimal latitude,@RequestParam(required=false) java.math.BigDecimal longitude,@RequestParam(required=false) String village,@RequestParam(required=false) String taluka,@RequestParam(required=false) String district,@RequestParam(defaultValue="ALL") String type){return service.search(new LocalServiceSearchRequest(latitude,longitude,village,taluka,district,type));}
+ @GetMapping("/mine") @PreAuthorize("isAuthenticated()") public List<LocalServiceListingResponse> mine(Authentication auth){return service.mine(currentUser.get(auth));}
+ @PostMapping @PreAuthorize("isAuthenticated()") public LocalServiceListingResponse create(Authentication auth,@Valid @RequestBody LocalServiceListingRequest req){return service.create(currentUser.get(auth),req);}
+ @PutMapping("/{id}") @PreAuthorize("isAuthenticated()") public LocalServiceListingResponse update(Authentication auth,@PathVariable UUID id,@Valid @RequestBody LocalServiceListingRequest req){return service.update(currentUser.get(auth),id,req);}
+ @DeleteMapping("/{id}") @PreAuthorize("isAuthenticated()") public void deactivate(Authentication auth,@PathVariable UUID id){service.deactivate(currentUser.get(auth),id);}
+ @PostMapping("/{id}/contact") @PreAuthorize("isAuthenticated()") public LocalServiceThreadResponse contact(Authentication auth,@PathVariable UUID id,@Valid @RequestBody LocalServiceContactRequest req){return service.contact(currentUser.get(auth),id,req);}
+ @GetMapping("/inbox") @PreAuthorize("isAuthenticated()") public List<LocalServiceThreadResponse> inbox(Authentication auth){return service.inbox(currentUser.get(auth));}
+ @GetMapping("/inbox/{threadId}/messages") @PreAuthorize("isAuthenticated()") public List<LocalServiceMessageResponse> messages(Authentication auth,@PathVariable UUID threadId){return service.messages(currentUser.get(auth),threadId);}
+ @PostMapping("/inbox/{threadId}/messages") @PreAuthorize("isAuthenticated()") public LocalServiceMessageResponse reply(Authentication auth,@PathVariable UUID threadId,@Valid @RequestBody LocalServiceMessageRequest req){return service.reply(currentUser.get(auth),threadId,req);}
+ @PatchMapping("/inbox/{threadId}/status") @PreAuthorize("isAuthenticated()") public LocalServiceThreadResponse status(Authentication auth,@PathVariable UUID threadId,@Valid @RequestBody LocalServiceStatusRequest req){return service.status(currentUser.get(auth),threadId,req);}
+}
